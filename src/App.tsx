@@ -1,25 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {invoke} from "@tauri-apps/api";
 
 function App() {
+
+  const [result,setResult]=useState<number>(0); // カウントの定数を用意
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <h1>tauri-sample</h1>
+        <button id='increment_btn' onClick={()=>{invoke("increment").then((res) => setResult(res as number));}}>増加</button>
+        <button id='decrement_btn' onClick={()=>{invoke("decrement").then((res) => setResult(res as number));}}>減少</button>
+        <div id='result'>{result}</div>
+      </div>
   );
 }
 
